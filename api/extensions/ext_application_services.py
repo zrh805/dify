@@ -22,7 +22,6 @@ from services.feature_service import FeatureService
 from services.feature_service_gateway import FeatureServiceGateway
 from services.recommended_app_query_compat import LegacyRecommendedAppCatalogGateway
 from services.recommended_app_query_service import RecommendedAppQueryService
-from services.recommended_app_service import RecommendedAppService
 from services.schema_definition_service import SchemaDefinitionService
 from services.setup_adapters import RedisSetupLock, RegisterServiceAccountProvisioner
 from services.setup_service import SetupService
@@ -69,7 +68,7 @@ def build_application_services(
         recommended_app_queries=RecommendedAppQueryService(
             catalog=LegacyRecommendedAppCatalogGateway(session_factory=database_client),
             trial_apps=TrialAppQueryRepository(session_factory=database_client),
-            is_trial_enabled=RecommendedAppService.is_trial_app_enabled,
+            is_trial_enabled=FeatureService.is_trial_app_enabled,
         ),
         trial_app_usage=TrialAppUsageService(
             usage=TrialAppUsageRepository(session_factory=database_client),
